@@ -10,7 +10,7 @@ import (
 
 // HomeHandler handles "/"
 func HomeHandler(res http.ResponseWriter, req *http.Request) {
-	res.Write([]byte("hi"))
+	res.Write([]byte("hi, Welcome to home"))
 }
 
 // SignUpHandler handles "/signup"
@@ -31,8 +31,10 @@ func SignInHandler(res http.ResponseWriter, req *http.Request) {
 	match, user := services.SignInUser(email, password)
 	if match {
 		token, _ := utils.GenerateJWTToken(user.Email, user.Role)
-		//tokenBytes, _ := json.Marshal(struct{ Token string }{token})
-		userResp := models.Response{User: user, Token: token}
+		userResp := struct {
+			User  models.User
+			Token string
+		}{user, token}
 
 		res.Header().Set("Content-Type", "appliction/json")
 		json.NewEncoder(res).Encode(userResp)

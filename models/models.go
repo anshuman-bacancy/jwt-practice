@@ -14,8 +14,3 @@ type Config struct {
 	ConnString string `mapstructure:"CONNECTION_STRING"`
 	SigningKey string `mapstructure:"SIGNING_KEY"`
 }
-
-type Response struct {
-	User  User
-	Token string
-}
